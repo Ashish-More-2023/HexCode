@@ -68,6 +68,8 @@ exports.getMyProjects = async (req, res) => {
     try {
         
         const userId = req.user._id;
+
+        console.log("gsgsgsgsgsgsgsg")
        
         const projects = await Project.find({
             $or: [
@@ -95,3 +97,15 @@ exports.getUserById = async (req, res) => {
         res.status(500).json({ message: 'Server error', error: err.message });
     }
 };
+
+exports.getAllUsers = async (req, res) => {
+    console.log("Fetching users for search...");
+    try {
+        const users = await User.find({}, "_id name");
+        res.json(users);
+    } catch (error) {
+        console.log("namastute");
+        console.error("Error fetching users:", error.message);
+        res.status(500).json({ error: "Failed to fetch users", details: error.message });
+    }
+}
