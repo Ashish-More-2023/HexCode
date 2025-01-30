@@ -16,7 +16,7 @@ const Navbar = () => {
     const closeMobileMenu = () => setIsMobileMenuOpen(false);
     const logout = async () => {
         try {
-          const response = await fetch("http://localhost:5000/auth/logout", {
+          const response = await fetch("http://localhost:5001/auth/logout", {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -70,7 +70,7 @@ const Navbar = () => {
 
                 <div className="hidden md:flex items-center flex-1 justify-end">
                     {!user && (
-                        <a href="http://localhost:5000/auth/google">
+                        <a href="http://localhost:5001/auth/google">
                             <button className="border-solid rounded-md px-4 py-2 mr-2 bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-300 text-white">
                                 Log-In
                             </button>
@@ -130,7 +130,7 @@ const Navbar = () => {
 
                             <div className="border-t pt-4">
                                 {!user ? (
-                                    <a href="http://localhost:5000/auth/google">
+                                    <a href="http://localhost:5001/auth/google">
                                         <button className="w-full border-solid rounded-md px-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white" onClick={ closeMobileMenu }>
                                             Log-In
                                         </button>

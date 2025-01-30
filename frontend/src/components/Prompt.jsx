@@ -20,7 +20,7 @@ const Prompt = () => {
 
     const handleCreateProject = async () => {
         if(!user){
-            window.location.href = "http://localhost:5000/auth/google";
+            window.location.href = "http://localhost:5001/auth/google";
             return;
         }
         if(!prompt.trim()) return;
@@ -106,7 +106,7 @@ const Prompt = () => {
         if (formValues) {
             try {
                 // Send the data to the backend
-                const response = await fetch("http://localhost:5000/project/add", { 
+                const response = await fetch("http://localhost:5001/project/add", { 
                     method: "POST", 
                     headers: { 
                         "Content-Type": "application/json", 
@@ -242,6 +242,7 @@ const Prompt = () => {
                 </div>
             </div>
         </div>
+
     );
 }
 

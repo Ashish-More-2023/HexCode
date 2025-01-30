@@ -10,11 +10,155 @@ const Profile = () => {
     const [projects, setProjects] = useState([]); // State to hold projects data
     const [loading, setLoading] = useState(true); // State for loading indicator
     const [error, setError] = useState(null); // State to capture errors
-  
+    const projects1=[
+        {
+            title: "AI Chat Assistant",
+            id: "#PRJ-001",
+            description:
+                "A sophisticated chatbot powered by machine learning, capable of natural conversations and task assistance.",
+            tags: ["Python", "TensorFlow", "Flask"],
+        },
+        
+        {
+            title: "Weather Dashboard",
+            id: "#PRJ-003",
+            description:
+                "Real-time weather tracking application with interactive maps and forecast predictions.",
+            tags: ["JavaScript", "Weather API", "Chart.js"],
+        },
+        {
+            title: "Social Media Analytics",
+            id: "#PRJ-004",
+            description:
+                "Analytics dashboard for tracking social media engagement and audience insights.",
+            tags: ["React", "Firebase", "D3.js"],
+        },
+        {
+            title: "Task Management App",
+            id: "#PRJ-005",
+            description:
+                "Collaborative task management tool with real-time updates and team features.",
+            tags: ["Vue.js", "Express", "PostgreSQL"],
+        },
+        {
+            title: "AI Chat Assistant",
+            id: "#PRJ-001",
+            description:
+                "A sophisticated chatbot powered by machine learning, capable of natural conversations and task assistance.",
+            tags: ["Python", "TensorFlow", "Flask"],
+        },
+        {
+            title: "E-Commerce Platform",
+            id: "#PRJ-002",
+            description:
+                "Full-stack e-commerce solution with real-time inventory management and payment processing.",
+            tags: ["React", "Node.js", "MongoDB"],
+        },
+        {
+            title: "E-Commerce Platform",
+            id: "#PRJ-002",
+            description:
+                "Full-stack e-commerce solution with real-time inventory management and payment processing.",
+            tags: ["React", "Node.js", "MongoDB"],
+        },
+        {
+            title: "Weather Dashboard",
+            id: "#PRJ-003",
+            description:
+                "Real-time weather tracking application with interactive maps and forecast predictions.",
+            tags: ["JavaScript", "Weather API", "Chart.js"],
+        },
+        {
+            title: "Social Media Analytics",
+            id: "#PRJ-004",
+            description:
+                "Analytics dashboard for tracking social media engagement and audience insights.",
+            tags: ["React", "Firebase", "D3.js"],
+        },
+        {
+            title: "Task Management App",
+            id: "#PRJ-005",
+            description:
+                "Collaborative task management tool with real-time updates and team features.",
+            tags: ["Vue.js", "Express", "PostgreSQL"],
+        },
+        {
+            title: "AI Chat Assistant",
+            id: "#PRJ-001",
+            description:
+                "A sophisticated chatbot powered by machine learning, capable of natural conversations and task assistance.",
+            tags: ["Python", "TensorFlow", "Flask"],
+        },
+        {
+            title: "E-Commerce Platform",
+            id: "#PRJ-002",
+            description:
+                "Full-stack e-commerce solution with real-time inventory management and payment processing.",
+            tags: ["React", "Node.js", "MongoDB"],
+        },
+        {
+            title: "Weather Dashboard",
+            id: "#PRJ-003",
+            description:
+                "Real-time weather tracking application with interactive maps and forecast predictions.",
+            tags: ["JavaScript", "Weather API", "Chart.js"],
+        },
+        {
+            title: "Social Media Analytics",
+            id: "#PRJ-004",
+            description:
+                "Analytics dashboard for tracking social media engagement and audience insights.",
+            tags: ["React", "Firebase", "D3.js"],
+        },
+        {
+            title: "Task Management App",
+            id: "#PRJ-005",
+            description:
+                "Collaborative task management tool with real-time updates and team features.",
+            tags: ["Vue.js", "Express", "PostgreSQL"],
+        },
+        {
+            title: "AI Chat Assistant",
+            id: "#PRJ-001",
+            description:
+                "A sophisticated chatbot powered by machine learning, capable of natural conversations and task assistance.",
+            tags: ["Python", "TensorFlow", "Flask"],
+        },
+        {
+            title: "E-Commerce Platform",
+            id: "#PRJ-002",
+            description:
+                "Full-stack e-commerce solution with real-time inventory management and payment processing.",
+            tags: ["React", "Node.js", "MongoDB"],
+        },
+        {
+            title: "Weather Dashboard",
+            id: "#PRJ-003",
+            description:
+                "Real-time weather tracking application with interactive maps and forecast predictions.",
+            tags: ["JavaScript", "Weather API", "Chart.js"],
+        },
+        {
+            title: "Social Media Analytics",
+            id: "#PRJ-004",
+            description:
+                "Analytics dashboard for tracking social media engagement and audience insights.",
+            tags: ["React", "Firebase", "D3.js"],
+        },
+        {
+            title: "Task Management App",
+            id: "#PRJ-005",
+            description:
+                "Collaborative task management tool with real-time updates and team features.",
+            tags: ["Vue.js", "Express", "PostgreSQL"],
+        },
+    ]
+    
+    
     // Function to fetch user data
     const fetchUserData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/user/my", {
+        const response = await fetch("http://localhost:5001/user/my", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -39,7 +183,7 @@ const Profile = () => {
     // console.log(user);
     const getAllProjects = async (userId) => {
       try {
-        const response = await fetch(`http://localhost:5000/user/my/project`, {
+        const response = await fetch(`http://localhost:5001/user/my/project`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -124,51 +268,67 @@ const Profile = () => {
         }
     });
 }
+const [shrink, setShrink] = useState(false);
+useEffect(() => {
+    const handleScroll = () => {
+        if (window.scrollY > 100) {
+            setShrink(true);
+        } else {
+            setShrink(false);
+        }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+    };
+}, []);
 console.log(projects);
   return (
-    <div className="bg-[#0f172a] text-white p-8 h-full w-full">
-      <div className="max-w-7xl mx-auto h-screen">
-        {/* Profile Section */}
-        <div className="flex gap-8">
-          {/* Profile Info */}
-          <div className="bg-[#1e293b] p-6 rounded-lg fixed h-[75vh] shadow-md w-1/4">
-          {user && (
-            <div className="bg-gray-700 w-[20vw] h-[40vh] mx-auto rounded-lg shadow-lg flex items-center justify-center">
-                <img src={user.imageURL} alt="" />
-            </div>
-          )}
-            
-            {user && <div className="flex justify-end mx-2 my-2"><button onClick={()=>handleShowEditDialog(setUser,user,handleUpdateUser)}><FontAwesomeIcon icon={faUserPen} /></button></div>}
-            <h2 className="text-xl text-center mt-4 font-bold">
-              {user ? user.name : "Loading..."}
-            </h2>
-            <p className="text-center text-[#94a3b8]">
-              {user ? `@${user.email}` : ""}
-            </p>
-            <h3 className="text-lg font-semibold mt-6">Skills</h3>
-            <div className="flex flex-wrap gap-2 mt-2">
-              {["Python", "Java", "MongoDB", "React", "Node.js"].map(
-                (skill, index) => (
-                  <span
-                    key={index}
-                    className="bg-blue-500 text-sm px-3 py-1 rounded-full text-white"
-                  >
-                    {skill}
-                  </span>
-                )
-              )}
-            </div>
+    <div className="bg-[#0f172a] text-white p-8 pb-20 overflow-scroll">
+    <div className="max-w-7xl mx-auto h-screen">
+      {/* Profile Section */}
+      <div className="flex flex-col gap-8 md:flex-row">
+        {/* Profile Info */}
+        <div className={`profile-section ${shrink ? 'shrink' : ''} bg-[#1e293b] p-6 h-[80vh]  rounded-lg shadow-md w-full md:w-[30vw] flex flex-col items-center`}>
+        {user && (
+          <div className="bg-gray-700 w-full md:w-[20vw] h-[40vh] mx-auto rounded-lg shadow-lg flex items-center justify-center">
+              <img src={user.imageURL} alt="" />
           </div>
+        )}
+          
+          {user && <div className="flex justify-end mx-2 my-2"><button onClick={()=>handleShowEditDialog(setUser,user,handleUpdateUser)}><FontAwesomeIcon icon={faUserPen} /></button></div>}
+          <h2 className="text-xl text-center mt-4 font-bold">
+            {user ? user.name : "Loading..."}
+          </h2>
+          <p className="text-center text-[#94a3b8]">
+            {user ? `@${user.email}` : ""}
+          </p>
+          <h3 className="text-lg font-semibold mt-6">Skills</h3>
+          <div className="flex flex-wrap gap-2 mt-2">
+            {["Python", "Java", "MongoDB", "React", "Node.js"].map(
+              (skill, index) => (
+                <span
+                  key={index}
+                  className="bg-[#334155] text-xs px-2 py-1 rounded text-white"
+                >
+                  {skill}
+                </span>
+              )
+            )}
+          </div>
+        </div>
 
           {/* Projects Section */}
-          <div className="ml-[26vw] w-full">
-            {loading ? (
+          <div className=" w-full ">
+            {/* {loading ? (
               <p className="text-center">Loading projects...</p>
             ) : error ? (
               <p className="text-center text-red-500">{error}</p>
             ) : (
-              <Projectlist projects={projects} /> 
-            )}
+              <Projectlist projects={projects1} /> 
+            )} */}
+            <Projectlist projects={projects1} /> 
           </div>
         </div>
       </div>
@@ -176,4 +336,5 @@ console.log(projects);
   );
 };
 
+// export default Profile;
 export default Profile;

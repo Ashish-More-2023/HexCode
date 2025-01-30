@@ -9,6 +9,26 @@ export const Footer = () => {
     const [displayCount, setDisplayCount] = useState(0);
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true }); // Animates only once when it comes into view
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const fullHeight = document.body.scrollHeight;
+
+            if (scrollTop + windowHeight >= fullHeight) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
     useEffect(() => {
         if (isInView) {
@@ -29,9 +49,9 @@ export const Footer = () => {
         <motion.footer 
             ref={ref}
             initial={{ opacity: 0, y: 50 }} 
-            animate={isInView ? { opacity: 1, y: 0 } : {}} 
+            animate={isInView && isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} 
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="w-full bg-gray-950 mt-4 py-2 px-4 flex md:flex-row justify-between mb-0 items-center"
+            className="w-full bg-gray-950 py-2 px-4 flex md:flex-row justify-between items-center fixed bottom-0"
         >
             <div className="flex flex-col items-start mb-4 md:mb-0">
                 <div className="text-white font-semibold">
@@ -55,7 +75,7 @@ export const Footer = () => {
                 </motion.div>
                 <div className="text-gray-300">Websites Generated</div>
             </div>
-            <div className="hidden md:flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 justify-center md:justify-end w-full md:w-auto">
+            <div className="hidden md:flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-6 justify-center md:justify-end w-full md:w-auto mb-0">
                 <Link to="/about" className="hover:text-gray-600 transition-colors duration-300">About</Link>
                 <Link to="/faqs" className="hover:text-gray-600 transition-colors duration-300">Licensing</Link>
                 <Link to="/roadmap" className="hover:text-gray-600 transition-colors duration-300">Contacts</Link>

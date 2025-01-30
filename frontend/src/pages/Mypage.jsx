@@ -8,7 +8,7 @@ const Mypage = () => {
   // Function to fetch user data
   const fetchUserData = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/user/my", {
+      const response = await fetch("http://localhost:5001/api/user/my", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

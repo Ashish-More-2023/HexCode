@@ -21,7 +21,7 @@ function ProtectedRoute({ children }) {
     const { user } = useUser();  // Get user context
   
     if (!user) {
-        window.location.href = "http://localhost:5000/auth/google";
+        window.location.href = "http://localhost:5001/auth/google";
         return null;
     }
   

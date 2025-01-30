@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/auth/login/success", { withCredentials: true });
+        const res = await axios.get("http://localhost:5001/auth/login/success", { withCredentials: true });
         setUser(res.data.user);
       } catch (err) {
         console.error("Not authenticated", err);

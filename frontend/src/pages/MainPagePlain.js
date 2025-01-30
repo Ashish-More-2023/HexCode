@@ -227,7 +227,7 @@ const MainPagePlain = () => {
     // Simulate fetching generated code from backend (replace this with your API call)
     try{
         console.log(parsedData.PID);
-        const response = await fetch(`http://localhost:5000/chat/${projectID}`,{
+        const response = await fetch(`http://localhost:5001/chat/${projectID}`,{
             method : 'POST',
             headers : {
                 'Content-Type': 'application/json'

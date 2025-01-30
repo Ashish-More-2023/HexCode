@@ -43,7 +43,7 @@ export default function MainPageReact({children}) {
     // ];
     const getHistory = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/chat/getchat/${projectID}`, {
+        const response = await fetch(`http://localhost:5001/chat/getchat/${projectID}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -266,7 +266,7 @@ export default function MainPageReact({children}) {
     // Simulate fetching generated code from backend (replace this with your API call)
     try{
       console.log(projectID);
-        const response = await fetch(`http://localhost:5000/chat/${projectID}`,{
+        const response = await fetch(`http://localhost:5001/chat/${projectID}`,{
             method : 'POST',
             headers : {
                 'Content-Type': 'application/json'
