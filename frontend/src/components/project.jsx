@@ -1,28 +1,149 @@
-<<<<<<< HEAD:frontend/src/pages/profile/components/project.jsx
-import React, { useState } from "react";
+import { all } from "axios";
+import React, { useState,useEffect } from "react";
 
-const ProjectList = (props) => {
+const ProjectList = ({projects,users,getAllUsers , user}) => {
     const [showPopup, setShowPopup] = useState(false); // Track if popup is visible
     const [selectedUsers, setSelectedUsers] = useState([]); // Track selected users
     const [searchTerm, setSearchTerm] = useState(""); // Search term for filtering users
-    const users = props.users; // List of all users from props
+    const [searchresult, setSearchResult]= useState([]);
+    const [project,setProject] = useState({});
+    const [allReadySelected,setAllReadySelected] = useState([]);
+    
 
-    // Function to handle adding users to selected list
-    const handleAddUser = (user) => {
-        setSelectedUsers([...selectedUsers, user]);
+
+    useEffect(()=>{
+        console.log(selectedUsers)
+    },[selectedUsers])
+    const getProjectData = async (projectid) => {
+        
+        try {
+            console.log(projectid);
+            const response = await fetch(`http://localhost:5000/project/${projectid}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include", // Include credentials for session management
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to fetch projects");
+            }
+
+            const data = await response.json();
+            setAllReadySelected(data.users); 
+        } catch (err) {
+            console.log(err) // Capture and set the error
+        }
     };
+
+
+
+    
+    const handleAddUser = (user) => {
+        setAllReadySelected((prevUsers) =>
+            prevUsers.some((u) => u === user._id)
+                ? prevUsers.filter((u) => u !== user._id) // Remove user if already added
+                : [...prevUsers, user] // Add user if not present
+        );
+        const existUser = allReadySelected.find((u) => u === user._id);
+        if(!existUser)
+        setAllReadySelected((p) => [...p, user._id]);
+        console.log(allReadySelected);
+    };
+
+    const selectproject = (id)=>{
+        setShowPopup(true);
+        getAllUsers();
+        setProject(id);
+
+    }
+    
+
+    const handleSearch = (e)=>{
+        console.log("searching....")
+        setSearchResult([]);
+        const searchValue = e.target.value;
+        setSearchTerm(searchValue);
+        users.map((user,index)=>{
+            const tosearch = user.name.trim().toLowerCase();
+            const search = searchValue.trim().toLowerCase();
+            if(tosearch.includes(search)){
+                setSearchResult((old)=>[...old,user.name]);
+            }
+        })
+    }
+
+    const handleclose = ()=>{
+        console.log('close');
+        setShowPopup(false);
+        setAllReadySelected([]);
+        setSelectedUsers([]);
+
+    }
+
+    const handlesave = async () => {
+        try {
+            console.log("Saving project...");
+            console.log("Project Name:", project.name);
+            console.log("Project Chats:", project.chats);
+            console.log("Selected Users Before Deduplication:", allReadySelected);
+            console.log("currentuser:",user );
+
+    
+            // const uniqueUsers = allReadySelected.filter((user, index, self) =>
+            //     index === self.findIndex((u) => u.id === user.id)
+            // );
+    
+            // console.log("Selected Users After Deduplication:", uniqueUsers);
+    
+            // Send the updated project data to the backend
+            const response = await fetch(`http://localhost:5000/project/${project._id}/edit`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: project.name,
+                    users: allReadySelected,
+                    owner: project.owner,
+                    visibility: project.visibility,
+                    description: project.description,
+                    projectType: project.projectType,
+                    chats: project.chats
+                }),
+                credentials: "include", // Ensures cookies/session are included
+            });
+    
+            if (!response.ok) {
+                throw new Error("Failed to update project");
+            }
+    
+            // Reset states after successful update
+            setProject({});
+            setSelectedUsers([]);
+            setShowPopup(false);
+    
+            console.log("Project updated successfully!");
+    
+        } catch (err) {
+            console.error("Error while saving project:", err);
+        }
+    };
+    
 
     // Filter users based on the search term
     const filteredUsers = users.filter(user =>
         user.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+    
 
     return (
         <div className="flex-1 grid grid-cols-3 ml-96 gap-6">
             <h1 className="text-4xl font-bold col-span-3 p-4 bg-[#1e293b] rounded-lg" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>
                 Projects :
             </h1>
-            {props.projects.map((project, index) => (
+            {projects.map((project, index) => (
                 <div
                     key={index}
                     className={`bg-[#1e293b] p-6 rounded-lg shadow-md transform transition-all duration-300 hover:scale-105 hover:bg-[#334155] ${
@@ -40,10 +161,13 @@ const ProjectList = (props) => {
                         ))}
                     </div> */}
                     <button
-                        onClick={() => setShowPopup(true)} // Show popup when clicked
+                        onClick={() => {selectproject(project)
+                            getProjectData(project._id)
+                        }} // Show popup when clicked
                         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
                     >
                         Add Users
+                        
                     </button>
                 </div>
             ))}
@@ -55,32 +179,38 @@ const ProjectList = (props) => {
                         <h2 className="text-xl font-bold text-white">Add Users to Project</h2>
                         <input
                             type="text"
-                            className="mt-4 w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="mt-4 w-full p-2 text-black border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                             placeholder="Search users..."
                             value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)} // Update search term
+                            onChange={(e) => handleSearch(e)} // Update search term
                         />
                         <div className="mt-4 max-h-72 overflow-y-auto">
                             {filteredUsers.map((user) => (
                                 <div key={user._id} className="flex justify-between items-center p-2 hover:bg-[#334155] rounded-md">
-                                    <span className="text-white">{user.name}</span>
-                                    <button
-                                        onClick={() => handleAddUser(user)}
-                                        className="px-4 py-1 bg-green-500 text-white rounded-md"
-                                    >
-                                        Add
-                                    </button>
-                                </div>
+                                <span className="text-white">{user.name}</span>
+                                <button
+                                    onClick={() => handleAddUser(user)}
+                                    className={`px-4 py-1 rounded-md ${
+                                        allReadySelected.some((u) => u === user._id) ? "bg-gray-500" : "bg-green-500"
+                                    } text-white`}
+                                >
+                                    {allReadySelected.some((u) => u === user._id) ? "Added" : "Add"}
+                                </button>
+                            </div>
                             ))}
                         </div>
                         <div className="mt-4 flex justify-between">
                             <button
-                                onClick={() => setShowPopup(false)}
+                                onClick={handleclose}
                                 className="px-4 py-2 bg-gray-500 text-white rounded-md"
                             >
                                 Close
                             </button>
-                            <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
+                            <button 
+                                className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                                onClick={()=>handlesave()}
+                            
+                            >
                                 Save Changes
                             </button>
                         </div>

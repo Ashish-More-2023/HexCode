@@ -17,6 +17,7 @@ router.get('/my/project',  userController.getMyProjects);
 
 // Route to get another user by ID
 router.get('/:userid',  userController.getUserById);
-router.get('/search',userController.getAllUsers);
+
+// router.get('/search',userController.getAllUsers);
 
 module.exports = router;

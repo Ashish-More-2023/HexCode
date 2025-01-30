@@ -11,6 +11,7 @@ router.put('/:pid/edit', projectController.editProject);
 // Route for deleting a project
 router.delete('/:pid/delete', projectController.deleteProject);
 router.get('/visible',projectController.getAllProjects);
+router.get('/:pid',projectController.getOneProject);
 
 // Route for voting project 
 router.post('/vote', projectController.voteProject)

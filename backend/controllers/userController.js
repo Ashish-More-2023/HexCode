@@ -98,14 +98,14 @@ exports.getUserById = async (req, res) => {
     }
 };
 
-exports.getAllUsers = async (req, res) => {
-    console.log("Fetching users for search...");
-    try {
-        const users = await User.find({}, "_id name");
-        res.json(users);
-    } catch (error) {
-        console.log("namastute");
-        console.error("Error fetching users:", error.message);
-        res.status(500).json({ error: "Failed to fetch users", details: error.message });
-    }
-}
+// exports.getAllUsers = async (req, res) => {
+//     console.log("Fetching users for search...");
+//     try {
+//         const users = await User.find({}, "_id name");
+//         console.log("Users found:", users);
+//         res.json(users);
+//     } catch (error) {
+//         console.error("Error fetching users:", error);
+//         res.status(500).json({ error: "Failed to fetch users", details: error.message });
+//     }
+// };

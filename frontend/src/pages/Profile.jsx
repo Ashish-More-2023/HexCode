@@ -13,6 +13,10 @@ const Profile = () => {
     const [loading, setLoading] = useState(true); // State for loading indicator
     const [error, setError] = useState(null); // State to capture errors
 
+    useEffect(()=>{
+        console.log(users)
+    },[users]);
+
     // Function to fetch user data
     const fetchUserData = async () => {
         try {
@@ -39,28 +43,28 @@ const Profile = () => {
 
     // Function to fetch all users from the backend
     const getAllUsers = async () => {
+        console.log("Fetching users...");
         try {
-            const response = await fetch("http://localhost:5000/user/search", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include", // Include credentials for session management
-            });
-
+            const response = await fetch("http://localhost:5000/search", { method: "GET",headers:{"Content-Type": "application/json" },credentials: "include" });
+            console.log("Response status:", response.status);
+    
             if (!response.ok) {
                 throw new Error("Failed to fetch users");
             }
-
+    
             const data = await response.json();
-            setUsers(data); // Set the fetched users
+            console.log("Fetched users:", data);
+            setUsers(data);
         } catch (err) {
-            setError(err.message); // Capture and set the error
+            console.error("Fetch error:", err.message);
+            setError(err.message);
         }
     };
+    
 
  
     const getAllProjects = async (userId) => {
+        
         try {
             const response = await fetch(`http://localhost:5000/user/my/project`, {
                 method: "GET",
@@ -85,7 +89,7 @@ const Profile = () => {
     useEffect(() => {
         fetchUserData();
 
-        getAllUsers();
+
         
     }, []);
 
@@ -194,7 +198,7 @@ const Profile = () => {
                         ) : error ? (
                             <p className="text-center text-red-500">{error}</p>
                         ) : (
-                            <Projectlist projects={projects} users={users} /> // Pass users as prop to Projectlist
+                            <Projectlist projects={projects} users={users} getAllUsers={getAllUsers} user ={user} /> // Pass users as prop to Projectlist
                         )}
                     </div>
                 </div>

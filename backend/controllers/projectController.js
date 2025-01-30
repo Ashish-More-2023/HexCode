@@ -29,9 +29,11 @@ exports.addProject = async (req, res) => {
 };
 
 exports.editProject = async (req, res) => {
+    console.log('hit');
     try {
         const { pid } = req.params; // The project ID from request params
         const updates = req.body;
+        // console.log(updates);
 
         // Find and update the project
         const project = await Project.findByIdAndUpdate(pid, updates, { new: true });
@@ -39,8 +41,11 @@ exports.editProject = async (req, res) => {
         if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }
+        console.log(project);
 
-        res.status(200).json(project); // Return the updated project
+        res.status(200).json({ message: "mein toh chal gaya" });
+
+        
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
@@ -78,6 +83,18 @@ exports.getAllProjects = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });
+    }
+};
+exports.getOneProject = async (req, res) => {
+    try {
+        console.log(req);
+        const project = await Project.findById(req.params.pid);
+        if (!project) {
+            return res.status(404).json({ message: 'Project not found' });
+        }
+        res.status(200).json(project);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
 };
 
