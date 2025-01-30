@@ -53,7 +53,8 @@ app.use((req, res, next) => {
 // API Routes
 app.use('/user', userRoutes);
 app.use('/project', projectRoutes);
-app.use('/chat',chatRoutes)
+app.use('/chat',chatRoutes);
+
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Connected to MongoDB'))

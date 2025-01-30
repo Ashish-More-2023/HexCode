@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios"; // Ensure axios is imported
-import Projectlist from "./components/project";
+import Projectlist from "../components/project";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen } from "@fortawesome/free-solid-svg-icons";
 import Swal from 'sweetalert2';
