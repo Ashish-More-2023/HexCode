@@ -81,6 +81,36 @@ exports.getAllProjects = async (req, res) => {
     }
 };
 
+exports.voteProject = async (req, res) => {
+    try {
+        const { projectId, voteType, userId } = req.body;
+        
+        const project = await Project.findById(projectId);
+        if (!project) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
 
+        // Remove existing votes
+        project.votes.upvotes = project.votes.upvotes.filter(id => 
+            id.toString() !== userId
+        );
+        project.votes.downvotes = project.votes.downvotes.filter(id => 
+            id.toString() !== userId
+        );
+        
+        // Add new vote
+        if (voteType) {
+            project.votes[`${voteType}votes`].push(userId);
+        }
+
+        project.voteCount = project.votes.upvotes.length - project.votes.downvotes.length;
+        await project.save();
+
+        res.json({ success: true, votes: project.votes, voteCount: project.voteCount });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+
+}
 
 

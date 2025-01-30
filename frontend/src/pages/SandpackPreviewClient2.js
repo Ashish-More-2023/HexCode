@@ -6,7 +6,7 @@ import {
 import React, { useContext, useEffect, useRef } from "react";
 import { ActionContext } from './ActionContext'; // Updated import path
 
-function SandpackPreviewClient() {
+function SandpackPreviewClient2() {
 
     const previewRef = useRef();
     const { sandpack } = useSandpack();
@@ -17,7 +17,11 @@ function SandpackPreviewClient() {
     }, [sandpack && action]);
 
     const GetSandpackClient = async () => {
-        const client = previewRef?.current?.getClient();
+        const client = previewRef.current?.getClient();
+        console.log(client);
+        console.log("hihojjfn");
+        
+
         if (client) {
             console.log(client);
             const result = await client.getCodeSandboxURL();
@@ -26,7 +30,7 @@ function SandpackPreviewClient() {
                 const link = 'https://' + result?.sandboxId + '.csb.app';
                 // setTimeout(() => {
                 //     window.location.assign(link);
-                // }, 1000); 
+                // }, 10000); 
                 window.location.assign(link);
                 console.log(result?.sandboxId);
                 console.log(link);
@@ -36,10 +40,8 @@ function SandpackPreviewClient() {
         }
     }
     return (
-
-        <SandpackPreview ref={previewRef} style={{ height: '600px' }} showNavigator={true} />
-
+        <SandpackPreview ref={previewRef} style={{ height: '6px' }} showNavigator={true} />
     )
 }
 
-export default SandpackPreviewClient;
+export default SandpackPreviewClient2;

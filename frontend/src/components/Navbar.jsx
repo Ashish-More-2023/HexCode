@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useUser } from "../context/userContext";
+import { useUser } from "../hooks/userContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHexagonNodes, faUser, faBars, faArrowLeft, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
@@ -39,7 +39,7 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className="flex w-full z-20 items-center justify-between py-3 px-4 border-gray-600 border-b-2 bg-opacity-30 backdrop-blur-md md:sticky md:top-0 relative">
+            <nav className="flex w-full z-20 items-center justify-between py-3 px-7 border-gray-600 border-b-2 bg-opacity-50 backdrop-blur-sm md:sticky md:top-0 relative">
 
                 
                 {/* Mobile Menu Button */}
@@ -54,15 +54,15 @@ const Navbar = () => {
                     <Link to="/">
                         <FontAwesomeIcon 
                             icon={faHexagonNodes} 
-                            className="hidden md:w-10 md:h-10 md:inline text-indigo-500"
+                            className="hidden md:w-10 md:h-10 md:inline text-indigo-500 "
                         />
                     </Link>
                 </div>
 
                 {/* Desktop Navigation */}
-                <div className="hidden md:flex space-x-6 flex-1 justify-center">
-                    <Link to="/" className="hover:text-gray-600 transition-colors duration-300">Home</Link>
-                    <Link to="/about" className="hover:text-gray-600 transition-colors duration-300">About</Link>
+                <div className="hidden md:flex space-x-6 flex-1 justify-center text-lg">
+                    <Link to="/" className="hover:text-gray-400 transition-colors duration-300">Home</Link>
+                    <Link to="/about" className="hover:text-gray-400 transition-colors duration-300">About</Link>
                     {/* <Link to="/faqs" className="hover:text-gray-600 transition-colors duration-300">Services</Link>
                     <Link to="/roadmap" className="hover:text-gray-600 transition-colors duration-300">Contacts</Link>
                     <Link to="/privacy" className="hover:text-gray-600 transition-colors duration-300">Privacy</Link> */}
@@ -79,8 +79,8 @@ const Navbar = () => {
                     
                     {user && (
                         <Popover className="relative">
-                            <PopoverButton className="border-solid rounded-full mr-4 bg-gray-400 h-10 w-10 flex items-center justify-center">
-                                <img src={user.imageURL} alt="User Avatar" className="h-full w-full object-cover rounded-full" />
+                            <PopoverButton className="border-solid rounded-full mr-4 bg-gray-700 p-0 h-10 w-10 flex items-center justify-center">
+                                <img src={user.imageURL} alt="User Avatar" className="h-full w-full object-cover rounded-full border-white border" />
                             </PopoverButton>
                         
                             <PopoverPanel
@@ -101,13 +101,6 @@ const Navbar = () => {
                             </PopoverPanel>
                         </Popover>
                     )}
-
-                    {!isUniversal &&
-                        <button className="border-solid rounded-md px-4 py-2 bg-indigo-500 hover:bg-indigo-600 focus:ring-2 focus:outline-none focus:ring-indigo-300 text-white"
-                         onClick={()=>{navigate('/universal')}}>
-                            Explore
-                        </button>
-                    }
                 </div>
             </nav>
 
@@ -121,12 +114,14 @@ const Navbar = () => {
                         >
                             <FontAwesomeIcon icon={faArrowLeft} className="w-6 h-6 ml-48"/>
                         </button>
-                        <div className="flex flex-col space-y-4 mt-6">
-                            <Link to="/" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>Home</Link>
-                            <Link to="/about" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>About</Link>
-                            {/* <Link to="/faqs" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>Services</Link>
-                            <Link to="/roadmap" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>Contacts</Link>
-                            <Link to="/privacy" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>Privacy</Link> */}
+                        <div className="flex flex-col mt-6 h-[90%]">
+                            <div className="flex flex-col space-y-4 flex-grow">
+                                <Link to="/" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>Home</Link>
+                                <Link to="/about" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>About</Link>
+                                {/* <Link to="/faqs" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>Services</Link>
+                                <Link to="/roadmap" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>Contacts</Link>
+                                <Link to="/privacy" className="p-2 hover:bg-gray-100 rounded hover:text-gray-700 transition-all duration-300" onClick={closeMobileMenu}>Privacy</Link> */}
+                            </div>
 
                             <div className="border-t pt-4">
                                 {!user ? (

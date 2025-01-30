@@ -12,4 +12,6 @@ router.put('/:pid/edit', projectController.editProject);
 router.delete('/:pid/delete', projectController.deleteProject);
 router.get('/visible',projectController.getAllProjects);
 
+// Route for voting project 
+router.post('/vote', projectController.voteProject)
 module.exports = router;

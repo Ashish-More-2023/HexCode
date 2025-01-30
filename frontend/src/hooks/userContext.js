@@ -12,15 +12,22 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+    let cancel;
     const fetchUser = async () => {
       try {
-        const res = await axios.get("http://localhost:5001/auth/login/success", { withCredentials: true });
+        const res = await axios.get("http://localhost:5000/auth/login/success", 
+        { 
+          withCredentials: true,
+          cancelToken: new axios.CancelToken(c => cancel = c)
+        });
         setUser(res.data.user);
       } catch (err) {
+        if (axios.isCancel(err)) return;
         console.error("Not authenticated", err);
       }
     };
     fetchUser();
+    return () => cancel();
   }, []);
 
   return (
