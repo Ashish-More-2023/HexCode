@@ -83,14 +83,20 @@ exports.getAllProjects = async (req, res) => {
 
 exports.voteProject = async (req, res) => {
     try {
+        console.log("YAHA AAYA");
+        
         const { projectId, voteType, userId } = req.body;
         
+        
         const project = await Project.findById(projectId);
+        console.log(project);
+        
         if (!project) {
             return res.status(404).json({ error: 'Project not found' });
         }
-
         // Remove existing votes
+        let prev_project = project.toObject();
+
         project.votes.upvotes = project.votes.upvotes.filter(id => 
             id.toString() !== userId
         );
@@ -100,7 +106,9 @@ exports.voteProject = async (req, res) => {
         
         // Add new vote
         if (voteType) {
-            project.votes[`${voteType}votes`].push(userId);
+            if(!prev_project.votes[`${voteType}votes`].map(id => id.toString()).includes(userId.toString())){
+                project.votes[`${voteType}votes`].push(userId);
+            }
         }
 
         project.voteCount = project.votes.upvotes.length - project.votes.downvotes.length;

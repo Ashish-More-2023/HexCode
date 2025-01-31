@@ -2,8 +2,8 @@ import { useVoting } from '../hooks/useVoting';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReact, faHtml5, faCss3Alt, faSquareJs  } from "@fortawesome/free-brands-svg-icons";
 
-export const TemplateCard = ({ id, title, description, initialVotes }) => {
-    const { votes, loading, error, handleVote } = useVoting(id, initialVotes);
+export const TemplateCard = ({ id, title, description, initialVotes, user }) => {
+    const { votes, loading, error, handleVote } = useVoting(id, initialVotes, user);
     let type = false;
     return (
       <div className="bg-slate-700 rounded-xl p-6 hover:scale-105 transition-transform duration-300 ease-out">
@@ -25,7 +25,7 @@ export const TemplateCard = ({ id, title, description, initialVotes }) => {
           <div className="flex items-center">
             {/* Upvote Button */}
             <button 
-              onClick={() => handleVote('up')}
+              onClick={() =>{if(user) handleVote('up')}}
               disabled={loading}
               className="group flex items-center gap-2 px-3 py-2 rounded-lg 
                 hover:bg-slate-700 transition-colors disabled:opacity-50"
@@ -33,7 +33,7 @@ export const TemplateCard = ({ id, title, description, initialVotes }) => {
             >
               <svg 
                 className={`w-6 h-6 transition-all 
-                  ${votes.upvotes.includes('current-user-id') 
+                  ${votes.upvotes.includes(user?._id) 
                     ? 'fill-green-500 stroke-green-500' 
                     : 'fill-transparent stroke-slate-400 group-hover:stroke-green-400'}`}
                 viewBox="0 0 24 24" 
@@ -42,7 +42,7 @@ export const TemplateCard = ({ id, title, description, initialVotes }) => {
                 <path d="M12 3L3 18h18L12 3z" />  
               </svg>
               <span className={`text-sm font-medium
-                ${votes.upvotes.includes('current-user-id') 
+                ${votes.upvotes.includes(user?._id) 
                   ? 'text-green-500' 
                   : 'text-slate-400 group-hover:text-slate-300'}`}>
                 {votes.upvotes.length}
@@ -51,7 +51,7 @@ export const TemplateCard = ({ id, title, description, initialVotes }) => {
 
             {/* Downvote Button */}
             <button 
-              onClick={() => handleVote('down')}
+              onClick={() => {if(user) handleVote('down')}}
               disabled={loading}
               className="group flex items-center gap-2 px-3 py-2 rounded-lg 
                 hover:bg-slate-700 transition-colors disabled:opacity-50"
@@ -59,7 +59,7 @@ export const TemplateCard = ({ id, title, description, initialVotes }) => {
             >
               <svg 
                 className={`w-6 h-6 transition-all rotate-180 
-                  ${votes.downvotes.includes('current-user-id') 
+                  ${votes.downvotes.includes(user?._id) 
                     ? 'fill-red-500 stroke-red-500' 
                     : 'fill-transparent stroke-slate-400 group-hover:stroke-red-400'}`}
                 viewBox="0 0 24 24" 
@@ -68,7 +68,7 @@ export const TemplateCard = ({ id, title, description, initialVotes }) => {
                 <path d="M12 3L3 18h18L12 3z" />  
               </svg>
               <span className={`text-sm font-medium
-                ${votes.downvotes.includes('current-user-id') 
+                ${votes.downvotes.includes(user?._id) 
                   ? 'text-red-500' 
                   : 'text-slate-400 group-hover:text-slate-300'}`}>
                 {votes.downvotes.length}

@@ -4,6 +4,8 @@ import { TemplateCard } from "../components/TemplateCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faRocket, faHexagonNodes } from "@fortawesome/free-solid-svg-icons";
 import InfiniteScroll from "react-infinite-scroller";
+import { useUser } from "../hooks/userContext";
+
 
 const SearchBar = () => (
   <div className="relative w-full max-w-sm my-3">
@@ -25,6 +27,7 @@ export const UniversalPage = () => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
+  const { user, setUser } = useUser();
   const getAllProjects = async () => {
     try {
       setIsLoading(true);
@@ -122,6 +125,7 @@ export const UniversalPage = () => {
                   title={template.name} 
                   description={template.messages}
                   initialVotes={template.votes}
+                  user={user}
                 />
               </div>
             ))}
