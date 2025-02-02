@@ -1,8 +1,8 @@
 import {
+    SandpackCodeEditor,
     SandpackPreview,
     useSandpack
 } from "@codesandbox/sandpack-react";
-
 import React, { useContext, useEffect, useRef } from "react";
 import { ActionContext } from './ActionContext'; // Updated import path
 
@@ -36,8 +36,9 @@ function SandpackPreviewClient() {
         }
     }
     return (
-
-        <SandpackPreview ref={previewRef} style = {{height : "857px"}} showNavigator={true} />
+        <>
+        <SandpackPreview ref={previewRef} style = {{height : "857px"}} showNavigator={false} showRefreshButton={true} showOpenInCodeSandbox={false} options={{autorun:false, autoreload:false}} />
+        </>
 
     )
 }

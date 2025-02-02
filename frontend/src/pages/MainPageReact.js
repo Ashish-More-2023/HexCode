@@ -6,7 +6,7 @@ import 'prismjs/themes/prism-okaidia.css';
 import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-css';
 import 'prismjs/components/prism-javascript';
-
+import SimpleCodeViewer from './SimpleCodeViewer.js'
 import { Sandpack,
     SandpackProvider,
     SandpackLayout,
@@ -119,7 +119,6 @@ export default function MainPageReact({children}) {
   // getAIResponse();
 
   // Define states
-  const [showCode, setShowCode] = useState(false); // State for toggling between website/code views
   const [activeTab,setActiveTab] = useState("preview");
   const prevTabRef = useRef();
 
@@ -148,7 +147,7 @@ const handleOnClick = () => {
 useEffect(() => {
   if (prevTabRef.current === "code" && activeTab === "preview") {
     // Trigger reload only when activeTab changes from "code" to "preview"
-    window.location.reload();
+    // window.location.reload();
   }
 
   // Update previous tab reference
@@ -198,16 +197,6 @@ useEffect(() => {
       setLoading(false)
     }
 
-  };
-
-  const toggleView = ()=>{
-    if(showCode){
-      setShowCode(false);
-    }
-    else{
-      setShowCode(true);
-      setTimeout(highlightCode, 0);
-    }
   };
 
   const minLeftWidth = 55;
@@ -373,6 +362,7 @@ useEffect(() => {
             showLineNumbers: true,
             closableTabs: true,
             activeFile: projectStructure.entryFilePath,
+            autoReload: true
           }}
           customSetup={{
             dependencies: {
@@ -401,10 +391,16 @@ useEffect(() => {
           ) : activeTab === "code" ? (
             <div className="flex h-full">
               <SandpackFileExplorer className="border-r border-gray-700" style={{ height: "857px" }} />
+              {/* <SimpleCodeViewer/> */}
               <SandpackCodeEditor />
+              {/* <Sandpack options={{autorun:false, autoReload:false}} /> */}
             </div>
           ) : (
-            <SandpackPreviewClient className="h-full" showNavigator={true} />
+            <>
+            <SandpackPreviewClient className="h-full" />
+            {/* <SandpackCodeEditor/> */}
+            {/* <SimpleCodeViewer/> */}
+            </>
           )}
 
           
