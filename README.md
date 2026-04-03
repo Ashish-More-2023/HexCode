@@ -44,9 +44,9 @@ Perfect for:
 
 ### Frontend
 - **Framework**: React.js
-- **State Management**: Redux
+- **Animation**: framer-motion
 - **Styling**: Tailwind CSS
-- **UI Components**: Material-UI
+- **Library**: SweetAlert2
 
 ### Backend
 - **Runtime**: Node.js
@@ -62,6 +62,7 @@ Perfect for:
 - MongoDB (v4.4 or higher)
 - Google Cloud Platform account
 - Anthropic API access
+- open API access
 
 ### Step-by-Step Setup
 
@@ -122,7 +123,15 @@ Perfect for:
    
    # API Keys
    CLAUDE_API_KEY=your_anthropic_api_key
+   OPENAI_API_KEY=your_openai_api_key
+  
    ```
+   Create `.env`file in the frontend directory:
+   ```env
+   
+   # Backend configuration URLs
+   REACT_APP_BACKEND_URL=your_backend_url
+
 
 6. **Start Development Servers**
    ```bash
@@ -151,7 +160,7 @@ Perfect for:
 
 
 ### Generated preview Page
-![image](https://i.ibb.co/6RVJX9Gp/main-page.jpg)
+![image](https://i.ibb.co/zhGn5mBv/preview.jpg)
 
 ### Generated codebase Page
 ![image](https://i.ibb.co/k6BM0Tyy/main-2.jpg)
