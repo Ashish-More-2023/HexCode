@@ -200,13 +200,13 @@ Whether it's a **blog, portfolio, or business site**, your description becomes t
 
 ## Author 
 
+-[@ashish more](https://github.com/Ashish-More-2023)
+
 -[@samar warsi](https://github.com/warsi1507)
 
 -[@mrigank](https://github.com/Mrigank22)
 
 -[@ritvij](https://github.com/ritvij611)
-
--[@ashish more](https://github.com/Ashish-More-2023)
 
 -[@pavan lokesh](https://github.com/Dev-pavanlokesh)
 
