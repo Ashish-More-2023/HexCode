@@ -18,7 +18,7 @@ app.use(express.json());
 
 app.use(
   session({
-    secret: process.env.SECRETKEY || "JAILOHIT",
+    secret: process.env.SECRETKEY,
     resave: true,
     saveUninitialized: false,
     cookie: {
